@@ -31,6 +31,7 @@
         registeredNotifications = [[NSMutableArray alloc] init];
         [self setupObservers:_player];
         [_player addObserver:self forKeyPath:@"currentPlaybackTime" options:nil context:nil];
+        _player.view.backgroundColor = [UIColor blackColor];
         [self addSubview:_player.view];
         
         _playInBackground = false;
@@ -56,6 +57,12 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(void)layoutSubviews{
+    if(_player){
+        _player.view.frame = self.bounds;
+    }
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
