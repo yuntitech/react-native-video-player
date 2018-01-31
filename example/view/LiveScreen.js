@@ -65,7 +65,7 @@ export default class LiveScreen extends Component {
                       }
               onLoad={(data)=>{console.log("JS onPrepared, video size = " + data.naturalSize.width + "x" +  data.naturalSize.height);}}
               onEnd={(data)=>{this.props.navigation.goBack();console.log("JS onCompletion");}}
-              onError={(data)=>{this.props.navigation.goBack();console.log("JS onError" + data.what + data.extra);}}
+              onError={(data)=>{this.props.navigation.goBack();console.log("JS onError:" + data.error.what + data.error.extra);}}
               style={styles.fullScreen}
             />        
 

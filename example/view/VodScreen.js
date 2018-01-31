@@ -96,7 +96,7 @@ export default class VodScreen extends Component {
                       }
               onLoad={this._onLoad.bind(this)}
               onEnd={()=>{this.props.navigation.goBack();console.log("JS onCompletion");}}
-              onError={(data)=>{this.props.navigation.goBack();console.log("JS onError:" + data.errorcode);}}
+              onError={(data)=>{this.props.navigation.goBack();console.log("JS onError:" + data.error.what + data.error.extra);}}
               onProgress={this._onProgress.bind(this)}
               onReadyForDisplay = {(data)=>{console.log("JS Video render start");}}
               style={styles.fullScreen}

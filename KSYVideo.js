@@ -14,6 +14,12 @@ export default class KSYVideo extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        const source = this.props.source;
+        let uri = source.uri;
+        this.setNativeProps({ src: {uri} });
+    }
+
     setNativeProps(nativeProps) {
         this.refs[RCT_VIDEO_REF].setNativeProps(nativeProps);
     }
@@ -114,14 +120,9 @@ export default class KSYVideo extends Component {
     }
 
     render(){
-        const source = this.props.source;
-        let uri = source.uri;
         const nativeProps = Object.assign({}, this.props);
         Object.assign(nativeProps, {
-            
-            src: {
-                uri,
-            },
+           
             onVideoTouch:this._onTouch,
             onVideoLoadStart: this._onLoadStart,
             onVideoLoad:this._onLoad,
