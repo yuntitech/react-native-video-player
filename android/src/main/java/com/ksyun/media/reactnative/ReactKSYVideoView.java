@@ -196,8 +196,8 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
                 ksyTextureView.start();
 
                 mVideoDuration = ksyTextureView.getDuration();
-                mVideoWidth = ksyTextureView.getWidth();
-                mVideoHeight = ksyTextureView.getHeight();
+                mVideoWidth = ksyTextureView.getVideoWidth();
+                mVideoHeight = ksyTextureView.getVideoHeight();
                 if (mVideoDuration > 0) {
                     setVideoProgress(0);
                 }
@@ -310,9 +310,6 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
         ksyTextureView.setOnErrorListener(mOnErrorListener);
         ksyTextureView.setOnLogEventListener(mOnLogEventListener);
         ksyTextureView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
-        //设置播放参数
-        ksyTextureView.setBufferTimeMax(2.0f);
-        ksyTextureView.setTimeout(5, 30);
 
         videoFile = new File(Environment.getExternalStorageDirectory(), "DCIM/video");
         imageFile = new File(Environment.getExternalStorageDirectory(), "DCIM/image");
@@ -521,23 +518,28 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
     }
 
     public void setTimeout(int prepareTimeout, int readTimeout){
-        mPrepareTimeout = prepareTimeout>0?prepareTimeout:5;
-        mReadTimeout = readTimeout>0?readTimeout:30;
-        if (ksyTextureView != null)
-            ksyTextureView.setTimeout(mPrepareTimeout, mReadTimeout);
-
+        if (mPrepareTimeout > 0 && mReadTimeout >0){
+            mPrepareTimeout = prepareTimeout;
+            mReadTimeout = readTimeout;
+            if (ksyTextureView != null)
+                ksyTextureView.setTimeout(mPrepareTimeout, mReadTimeout);
+        }
     }
 
     public void setBufferSize(int bufferSize){
-        mBufferSize = bufferSize>0?bufferSize:15;
-        if (ksyTextureView != null)
-            ksyTextureView.setBufferSize(mBufferSize);
+        if (mBufferSize > 0){
+            mBufferSize = bufferSize;
+            if (ksyTextureView != null)
+                ksyTextureView.setBufferSize(mBufferSize);
+        }
     }
 
     public void setBufferTime(int bufferTime){
-        mBufferTime = bufferTime>0?bufferTime:2;
-        if (ksyTextureView != null)
-            ksyTextureView.setBufferTimeMax(mBufferTime);
+        if (mBufferTime > 0){
+            mBufferTime = bufferTime;
+            if (ksyTextureView != null)
+                ksyTextureView.setBufferTimeMax(mBufferTime);
+        }
     }
 
     public void applyModifiers() {
@@ -547,9 +549,6 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
         setMutedModifier(mMuted);
         setMirror(mMirror);
         setRotateDegree(mDegree);
-        setTimeout(mPrepareTimeout, mReadTimeout);
-        setBufferSize(mBufferSize);
-        setBufferTime(mBufferTime);
     }
 
     @Override
