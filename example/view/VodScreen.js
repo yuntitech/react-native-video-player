@@ -23,7 +23,6 @@ export default class VodScreen extends Component {
     constructor(props) {
       super(props);
       this.state = {showbar: true, 
-        record: false, 
         paused: false, 
         windowWidth: 0, 
         windowHeight: 0,
@@ -90,8 +89,7 @@ export default class VodScreen extends Component {
               playInBackground={true}
               controls={true}
               onTouch={()=>{
-                              if (!this.state.record)
-                                this.setState({showbar: !this.state.showbar})
+                              this.setState({showbar: !this.state.showbar})
                             }
                       }
               onLoad={this._onLoad.bind(this)}
@@ -108,20 +106,8 @@ export default class VodScreen extends Component {
                 <TouchableOpacity onPress={()=>{this.video.saveBitmap();}}>
                    <Image style={{width:40,height:40}} source={require("../res/images/screen_shot.png")}/>
                 </TouchableOpacity>
-
-                <TouchableOpacity style={{marginTop:40}} onPress={()=>{this.setState({record:true}); this.video.recordVideo();}}>
-                  <Image style={{width:40,height:40}} source={require("../res/images/screen_cap.png")}/>
-                </TouchableOpacity>
               </View>
             </View>):(null)}      
-
-          {this.state.record?(
-            <View style={{alignSelf:'center'}}>
-              <TouchableOpacity onPress={()=>{this.video.stopRecordVideo(); this.setState({record:false})}}>
-                  <Image style={{width:50,height:50}} source={require("../res/images/cap_pause.png")}/>
-              </TouchableOpacity>
-            </View>
-          ):(null)}
         
           {this.state.showbar?(
             <View style={styles.controller}>

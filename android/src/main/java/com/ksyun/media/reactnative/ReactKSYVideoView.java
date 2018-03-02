@@ -88,13 +88,12 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
 
     private static final String TAG = "React VideoView";
     public static final int UPDATE_PROGRESS = 0;
+    private String mDataSource;
     private KSYTextureView ksyTextureView;
-    private KSYMediaRecorder mMediaRecorder;
     private Handler mHandler;
     private int mVideoWidth;
     private int mVideoHeight;
-    private File videoFile, imageFile;
-    private boolean bRecord = false;
+    private File imageFile;
     private int mResizeMode = KSYMediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT;
     private float mProgressUpdateInterval = 250.0f;
     private ThemedReactContext mThemedReactContext;
@@ -262,7 +261,10 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
                 case KSYMediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START:
                     mEventEmitter.receiveEvent(getId(), Events.EVENT_READY_FOR_DISPLAY.toString(), Arguments.createMap());
                     break;
-
+                case KSYMediaPlayer.MEDIA_INFO_SUGGEST_RELOAD:
+                    if (ksyTextureView != null)
+                        ksyTextureView.reload(mDataSource, true);
+                    break;
                 default:
             }
             return false;
@@ -311,11 +313,8 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
         ksyTextureView.setOnLogEventListener(mOnLogEventListener);
         ksyTextureView.setOnBufferingUpdateListener(mOnBufferingUpdateListener);
 
-        videoFile = new File(Environment.getExternalStorageDirectory(), "DCIM/video");
         imageFile = new File(Environment.getExternalStorageDirectory(), "DCIM/image");
-        if (!videoFile.exists()) {
-            videoFile.mkdir();
-        }
+
         if (!imageFile.exists()) {
             imageFile.mkdir();
         }
@@ -372,58 +371,6 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
 
     }
 
-    public void reacordVideo() {
-        if (mMediaRecorder != null)
-            return;
-        bRecord = true;
-        KSYMediaRecorderConfig recorderConfig = new KSYMediaRecorderConfig();
-        String videoName = System.currentTimeMillis() + ".mp4";
-        String outputPath = videoFile.getAbsolutePath() + "/" + videoName;
-        final String videoPath = outputPath;
-        recorderConfig.setVideoBitrate(800 * 1000); //码率设置为 800kbps
-        recorderConfig.setKeyFrameIntervalSecond(3); //关键帧间隔为 3s
-        recorderConfig.setAudioBitrate(64 * 1000); // 音频编码码率设置为 64kbps
-
-        mMediaRecorder = new KSYMediaRecorder(recorderConfig, outputPath);
-        try {
-            mMediaRecorder.init(ksyTextureView.getMediaPlayer()); // 初始化
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mMediaRecorder.start(); // 开始录制
-
-        final Timer cap_timer = new Timer(true);
-        TimerTask timerTask = new TimerTask() {
-            private int progress = 0;
-            @Override
-            public void run() {
-                progress += 10;
-                if ((progress >= 3000 && !bRecord) || progress > 15000) {
-                    mMediaRecorder.stop();
-                    mMediaRecorder = null;
-                    File file = new File(videoPath);
-                    Uri uri = Uri.fromFile(file);
-                    Context context = getContext();
-                    while (!(context instanceof Activity) && context instanceof ContextWrapper) {
-                        context = ((ContextWrapper) context).getBaseContext();
-                    }
-                    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                    cap_timer.cancel();
-                }
-            }
-        };
-        cap_timer.schedule(timerTask, 0, 10);
-    }
-
-    public void saveVideo(){
-        bRecord = false;
-    }
-
-    public void prepareAsync() {
-        if (ksyTextureView != null)
-            ksyTextureView.prepareAsync();
-    }
-
     public void setDataSource(String url) {
         WritableMap src = Arguments.createMap();
         src.putString(ReactKSYVideoViewManager.PROP_SRC_URI, url);
@@ -431,7 +378,7 @@ public class ReactKSYVideoView extends RelativeLayout implements LifecycleEventL
         WritableMap event = Arguments.createMap();
         event.putMap(ReactKSYVideoViewManager.PROP_SRC, src);
         mEventEmitter.receiveEvent(getId(), Events.EVENT_LOAD_START.toString(), event);
-
+        mDataSource = url;
         try {
             ksyTextureView.setDataSource(url);
             ksyTextureView.prepareAsync();

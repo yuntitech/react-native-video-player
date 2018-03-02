@@ -105,22 +105,6 @@ export default class KSYVideo extends Component {
         );
     }
 
-    recordVideo(){
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs[RCT_VIDEO_REF]),
-            UIManager.RCTKSYVideo.Commands.recordVideo,
-            null
-        );
-    }
-
-    stopRecordVideo(){
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs[RCT_VIDEO_REF]),
-            UIManager.RCTKSYVideo.Commands.stopRecordVideo,
-            null
-        );
-    }
-
     render(){
         const nativeProps = Object.assign({}, this.props);
         Object.assign(nativeProps, {

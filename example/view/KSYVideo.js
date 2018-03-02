@@ -6,9 +6,11 @@ import {
     View,
     UIManager,
     findNodeHandle,
-    StyleSheet
+    StyleSheet,
+    ViewPropTypes
 }from 'react-native';
 var RCT_VIDEO_REF = 'KSYVideo';
+const KSYViewPropType = ViewPropTypes || View.propTypes;
 export default class KSYVideo extends Component {
     constructor(props) {
         super(props);
@@ -103,22 +105,6 @@ export default class KSYVideo extends Component {
         );
     }
 
-    recordVideo(){
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs[RCT_VIDEO_REF]),
-            UIManager.RCTKSYVideo.Commands.recordVideo,
-            null
-        );
-    }
-
-    stopRecordVideo(){
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs[RCT_VIDEO_REF]),
-            UIManager.RCTKSYVideo.Commands.stopRecordVideo,
-            null
-        );
-    }
-
     render(){
         const nativeProps = Object.assign({}, this.props);
         Object.assign(nativeProps, {
@@ -145,7 +131,7 @@ export default class KSYVideo extends Component {
 }
 KSYVideo.propTypes = {
     /* Native only */
-    style: View.propTypes.style,
+    style: KSYViewPropType.style,
     src: PropTypes.object,
     seek: PropTypes.number,
     onVideoTouch: PropTypes.func,
@@ -190,7 +176,7 @@ KSYVideo.propTypes = {
     onPlaybackStalled: PropTypes.func,
     onPlaybackResume: PropTypes.func,
 
-    ...View.propTypes,
+    ...KSYViewPropType,
 };
 
 const RCTKSYVideo = requireNativeComponent('RCTKSYVideo',KSYVideo,{
