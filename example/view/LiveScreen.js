@@ -22,7 +22,7 @@ import AudioController from './AudioController'
 export default class LiveScreen extends Component {
     constructor(props) {
       super(props);
-      this.state = {showbar: true, degree: 0 , mirror: false, record: 0, volume: 0.5};
+      this.state = {showbar: true, degree: 0 , mirror: false, volume: 0.5};
     }
 
     onPressRotate(){
@@ -59,8 +59,7 @@ export default class LiveScreen extends Component {
               resizeMode={'contain'}
               volume={volume}
               onTouch={()=>{
-                              if (!this.state.record)
-                                this.setState({showbar: !this.state.showbar})
+                              this.setState({showbar: !this.state.showbar})
                             }
                       }
               onLoad={(data)=>{console.log("JS onPrepared, video size = " + data.naturalSize.width + "x" +  data.naturalSize.height);}}
@@ -78,22 +77,10 @@ export default class LiveScreen extends Component {
               </View>
             </View>):(null)}
 
-          {this.state.record==1?(
-            <View style={{justifyContent: 'center'}}>
-              <TouchableOpacity onPress={()=>{this.video.stopRecordVideo(); this.setState({record:0})}}>
-                  <Image style={{width:50,height:50}} source={require("../res/images/cap_pause.png")}/>
-              </TouchableOpacity>
-            </View>
-            ):(null)}
-
           {this.state.showbar?(
             <View style={{marginRight:10, justifyContent: 'center'}}>
               <TouchableOpacity style={{marginTop:20}} onPress={()=>{this.video.saveBitmap();}}>
                  <Image style={{width:40,height:40}} source={require("../res/images/screen_shot.png")}/>
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{marginTop:40}} onPress={()=>{this.setState({record:1}); this.video.recordVideo();}}>
-                <Image style={{width:40,height:40}} source={require("../res/images/screen_cap.png")}/>
               </TouchableOpacity>
 
               <TouchableOpacity style={{marginTop:40}} onPress={()=>{this.setState({mirror: !this.state.mirror});}}>
