@@ -44,6 +44,7 @@ public class ReactKSYVideoViewManager extends SimpleViewManager<ReactKSYVideoVie
     public static final String PROP_READTIMEOUT = "readTimeout";
     public static final String PROP_BUFFERTIME = "bufferTime";
     public static final String PROP_BUFFERSIZE = "bufferSize";
+    private static final String PROP_RESUME_PAUSE = "resumeOrPause";
 
     private static final int COMMAND_SAVEBITMAP_ID = 1;
     private static final String COMMAND_SAVEBITMAP_NAME = "saveBitmap";
@@ -176,5 +177,19 @@ public class ReactKSYVideoViewManager extends SimpleViewManager<ReactKSYVideoVie
     @ReactProp(name = PROP_BUFFERTIME,  defaultInt = 2)
     public void setBufferTime(final ReactKSYVideoView videoView, final int bufferTime) {
         videoView.setBufferTime(bufferTime);
+    }
+
+    @ReactProp(name = PROP_RESUME_PAUSE)
+    public void setResumeOrPause(final ReactKSYVideoView videoView, final int resumeOrPause) {
+        switch (resumeOrPause) {
+            case 1:
+                videoView.onHostResume();
+                break;
+            case 0:
+                videoView.onHostPause();
+                break;
+            default:
+                break;
+        }
     }
 }

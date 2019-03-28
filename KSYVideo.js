@@ -175,6 +175,7 @@ KSYVideo.propTypes = {
     onReadyForDisplay: PropTypes.func,
     onPlaybackStalled: PropTypes.func,
     onPlaybackResume: PropTypes.func,
+    resumeOrPause: PropTypes.number,
 
     ...KSYViewPropType,
 };
