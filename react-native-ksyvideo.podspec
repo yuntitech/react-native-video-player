@@ -21,4 +21,6 @@ Pod::Spec.new do |s|
 
   s.dependency "React-Core"
   s.vendored_frameworks = 'ios/KSYMediaPlayer.framework'
+  s.libraries = 'bz2', 'c++', 'sqlite3', 'z'
+  s.frameworks = 'SystemConfiguration', 'VideoToolbox'
 end
