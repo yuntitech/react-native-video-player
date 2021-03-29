@@ -41,18 +41,18 @@ RCT_EXPORT_VIEW_PROPERTY(playInBackground, BOOL);
 //RCT_EXPORT_VIEW_PROPERTY(playWhenInactive, BOOL);
 
 
-RCT_EXPORT_VIEW_PROPERTY(onVideoTouch, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onVideoLoadStart, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onVideoLoad, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoTouch, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoLoadStart, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoLoad, RCTDirectEventBlock);
 
-RCT_EXPORT_VIEW_PROPERTY(onVideoError, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onVideoProgress, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onVideoSeek, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onVideoEnd, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoError, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoProgress, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoSeek, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onVideoEnd, RCTDirectEventBlock);
 
-RCT_EXPORT_VIEW_PROPERTY(onReadyForDisplay, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onPlaybackStalled, RCTBubblingEventBlock);
-RCT_EXPORT_VIEW_PROPERTY(onPlaybackResume, RCTBubblingEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onReadyForDisplay, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onPlaybackStalled, RCTDirectEventBlock);
+RCT_EXPORT_VIEW_PROPERTY(onPlaybackResume, RCTDirectEventBlock);
 
 
 

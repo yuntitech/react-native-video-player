@@ -13,18 +13,18 @@
 
 @interface RCTKSYVideo : UIView
 
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoLoadStart;
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoLoad;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoLoadStart;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoLoad;
 
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoError;
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoProgress;
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoSeek;
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoEnd;
-@property (nonatomic, copy) RCTBubblingEventBlock onVideoTouch;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoError;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoProgress;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoSeek;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoEnd;
+@property (nonatomic, copy) RCTDirectEventBlock onVideoTouch;
 
-@property (nonatomic, copy) RCTBubblingEventBlock onReadyForDisplay;
-@property (nonatomic, copy) RCTBubblingEventBlock onPlaybackStalled;
-@property (nonatomic, copy) RCTBubblingEventBlock onPlaybackResume;
+@property (nonatomic, copy) RCTDirectEventBlock onReadyForDisplay;
+@property (nonatomic, copy) RCTDirectEventBlock onPlaybackStalled;
+@property (nonatomic, copy) RCTDirectEventBlock onPlaybackResume;
 
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
