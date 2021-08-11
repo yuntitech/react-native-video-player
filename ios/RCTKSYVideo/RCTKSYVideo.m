@@ -13,7 +13,10 @@
 
 @implementation RCTKSYVideo {
     RCTEventDispatcher *_eventDispatcher;
+  
+#if !TARGET_IPHONE_SIMULATOR
     KSYMoviePlayerController *_player;
+#endif
     
     NSMutableArray *registeredNotifications;
     float prepareTimeout;
@@ -24,8 +27,10 @@
     BOOL _playWhenInactive;
 }
 
+
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher {
     if ((self = [super init])) {
+#if !TARGET_IPHONE_SIMULATOR
         _eventDispatcher = eventDispatcher;
         _player = [[KSYMoviePlayerController alloc]initWithContentURL:nil];
         registeredNotifications = [[NSMutableArray alloc] init];
@@ -51,10 +56,12 @@
                                                  selector:@selector(applicationWillEnterForeground:)
                                                      name:UIApplicationWillEnterForegroundNotification
                                                    object:nil];
+#endif
     }
     return self;
 }
 
+#if !TARGET_IPHONE_SIMULATOR
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -352,5 +359,6 @@
     [_player.view removeFromSuperview];
     _player = nil;
 }
+#endif
 
 @end
