@@ -16,7 +16,7 @@ class AudioController extends Component {
         //slideX.setValue(75);
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (!this.state.moving) {
             this.state.slideX.setValue(this.computeScreenX(nextProps.percent));
         }
@@ -26,7 +26,7 @@ class AudioController extends Component {
         return percent * this.state.width / 100;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         console.log("JS  onLayout");
         this.holderPanResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true,

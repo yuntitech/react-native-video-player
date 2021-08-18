@@ -13,7 +13,7 @@ class ProgressController extends Component {
         this.state = {lineX: new Animated.Value(0), slideX: new Animated.Value(0)};
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (!this.state.moving) {
             this.state.slideX.setValue(this.computeScreenX(nextProps.percent));
         }
@@ -23,7 +23,7 @@ class ProgressController extends Component {
         return percent * this.state.width / 100;
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         this.holderPanResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true,
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
